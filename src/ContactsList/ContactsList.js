@@ -3,15 +3,14 @@ import { Component } from 'react';
 
 class ContactsList extends Component {
   render() {
-    console.log(this.props.state);
+    // console.log(this.props);
     // this.props.state.contacts.map(contact => console.log(contact));
     return (
       <ul>
-        {this.props.state.contacts.map(contact => {
+        {this.props.contacts.map(contact => {
           return (
             <li key={uuidv4()}>
-              {contact.name}
-              {contact.number}
+              {contact.name}: {contact.number}
             </li>
           );
         })}
