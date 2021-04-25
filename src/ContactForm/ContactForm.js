@@ -1,4 +1,4 @@
-// import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
 import PropTypes from 'prop-types';
 import styles from './ContactForm.module.css';
@@ -9,16 +9,51 @@ class ContactForm extends Component {
     number: '',
   };
 
+  resetInput = () => {
+    this.setState({
+      name: '',
+      number: '',
+    });
+  };
+
+  handleChangeInState = e => {
+    const { value, name } = e.target;
+    this.setState({
+      [name]: value,
+    });
+  };
+
+  addContact = e => {
+    e.preventDefault();
+    const user = {
+      name: this.state.name,
+      number: this.state.number,
+      id: uuidv4(),
+    };
+
+    const ifThereIsSuchContact = this.props.contacts.filter(contact => {
+      return contact.name.toLowerCase() === this.state.name.toLowerCase();
+    });
+
+    // if (ifThereIsSuchContact) {
+    //   return alert(`${this.state.name} already exists`);
+    // }
+    console.log(ifThereIsSuchContact);
+
+    this.props.contacts.push(user);
+    this.resetInput();
+  };
+
   render() {
     return (
-      <form onSubmit={this.props.addContact} className={styles.ContactForm}>
+      <form onSubmit={this.addContact} className={styles.ContactForm}>
         <h1>Phonebook</h1>
         <div className={styles.InputsDiv}>
           <label className={styles.LabelContactForm}>
             Name{' '}
             <input
               className={styles.Input}
-              onChange={this.props.handleChangeInState}
+              onChange={this.handleChangeInState}
               value={this.state.name}
               type="text"
               name="name"
@@ -30,7 +65,7 @@ class ContactForm extends Component {
             Number
             <input
               className={styles.Input}
-              onChange={this.props.handleChangeInState}
+              onChange={this.handleChangeInState}
               value={this.state.number}
               type="tel"
               name="number"

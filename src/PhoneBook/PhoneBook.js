@@ -17,40 +17,6 @@ class PhoneBook extends Component {
     filter: '',
   };
 
-  resetInput = () => {
-    this.setState({
-      name: '',
-      number: '',
-    });
-  };
-
-  handleChangeInState = e => {
-    const { value, name } = e.target;
-    this.setState({
-      [name]: value,
-    });
-  };
-
-  addContact = () => {
-    const user = {
-      name: this.state.name,
-      number: this.state.number,
-      id: uuidv4(),
-    };
-
-    const ifThereIsSuchContact = this.state.contacts.filter(contact => {
-      return contact.name.toLowerCase() === this.state.name.toLowerCase();
-    });
-
-    // if (ifThereIsSuchContact) {
-    //   return alert(`${this.state.name} already exists`);
-    // }
-    console.log(ifThereIsSuchContact);
-
-    this.state.contacts.push(user);
-    this.resetInput();
-  };
-
   filterContactsByName = e => {
     const { value } = e.target;
     this.setState({
@@ -85,6 +51,7 @@ class PhoneBook extends Component {
         <ContactForm
           handleChangeInState={this.handleChangeInState}
           addContact={this.addContact}
+          contacts={this.state.contacts}
         />
         <h1>Contacts</h1>
         <Filter
