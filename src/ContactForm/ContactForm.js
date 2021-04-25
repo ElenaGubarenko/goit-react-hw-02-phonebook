@@ -35,12 +35,12 @@ class ContactForm extends Component {
       return contact.name.toLowerCase() === this.state.name.toLowerCase();
     });
 
-    // if (ifThereIsSuchContact) {
-    //   return alert(`${this.state.name} already exists`);
-    // }
-    console.log(ifThereIsSuchContact);
+    if (ifThereIsSuchContact.length !== 0) {
+      return alert(`${this.state.name} already exists`);
+    }
 
     this.props.contacts.push(user);
+    this.props.updateState(this.props.contacts);
     this.resetInput();
   };
 

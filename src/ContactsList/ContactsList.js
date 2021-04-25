@@ -10,7 +10,7 @@ class ContactsList extends Component {
         {this.props.contacts.map(contact => {
           return (
             <li className={styles.ContactListItem} key={uuidv4()}>
-              {contact.name}: {contact.number}{' '}
+              {contact.name}: {contact.number}
               <button
                 className={styles.Delete}
                 onClick={() => this.props.deleteContact(contact.id)}

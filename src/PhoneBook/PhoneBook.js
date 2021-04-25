@@ -1,5 +1,4 @@
-// import { Component } = require('react');
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
 import Filter from '../Filter';
 import ContactsList from '../ContactsList';
@@ -15,6 +14,7 @@ class PhoneBook extends Component {
       { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
     ],
     filter: '',
+    filtredContacts: [],
   };
 
   filterContactsByName = e => {
@@ -23,20 +23,16 @@ class PhoneBook extends Component {
       filter: value,
     });
 
-    const result = this.state.contacts.filter(contact => {
-      return contact.name
-        .toLowerCase()
-        .includes(this.state.filter.toLowerCase());
-    });
-
-    if (this.state.filter === '') {
-      this.setState({
-        contacts: this.state.contacts,
+    if (this.state.filter !== '') {
+      const result = this.state.contacts.filter(contact => {
+        return contact.name
+          .toLowerCase()
+          .includes(this.state.filter.toLowerCase());
       });
-    } else
-      this.setState({
-        contacts: result,
-      });
+      this.setState({ filteredContacts: result });
+      return;
+    }
+    this.setState({ filteredContacts: [] });
   };
 
   deleteContact = id => {
@@ -45,10 +41,17 @@ class PhoneBook extends Component {
     }));
   };
 
+  updateState = data => {
+    this.setState({
+      contacts: data,
+    });
+  };
+
   render() {
     return (
       <Container>
         <ContactForm
+          updateState={this.updateState}
           handleChangeInState={this.handleChangeInState}
           addContact={this.addContact}
           contacts={this.state.contacts}
@@ -60,7 +63,12 @@ class PhoneBook extends Component {
           value={this.state.filter}
         />
         <ContactsList
-          contacts={this.state.contacts}
+          filtredContacts={this.state.filtredContacts}
+          contacts={
+            this.state.filter !== ''
+              ? this.state.filteredContacts
+              : this.state.contacts
+          }
           deleteContact={this.deleteContact}
         />
       </Container>
