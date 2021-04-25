@@ -1,6 +1,6 @@
 // import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
-import Input from '../Input';
+import PropTypes from 'prop-types';
 
 class ContactForm extends Component {
   state = {
@@ -12,7 +12,7 @@ class ContactForm extends Component {
     return (
       <div>
         <h1>Phonebook</h1>
-        <Input
+        <input
           onChange={this.props.handleChangeInState}
           value={this.state.name}
           type="text"
@@ -20,7 +20,7 @@ class ContactForm extends Component {
           pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
           title="Имя может состоять только из букв, апострофа, тире и пробелов. Например Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan и т. п."
         />
-        <Input
+        <input
           onChange={this.props.handleChangeInState}
           value={this.state.number}
           type="tel"
@@ -34,5 +34,10 @@ class ContactForm extends Component {
     );
   }
 }
+
+ContactForm.propTypes = {
+  onChange: PropTypes.func,
+  value: PropTypes.string,
+};
 
 export default ContactForm;

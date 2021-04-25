@@ -1,7 +1,7 @@
 // import { Component } = require('react');
 import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
-import Input from '../Input';
+import Filter from '../Input';
 import ContactsList from '../ContactsList';
 import ContactForm from '../ContactForm';
 
@@ -41,9 +41,9 @@ class PhoneBook extends Component {
       return contact.name.toLowerCase() === this.state.name.toLowerCase();
     });
 
-    if (ifThereIsSuchContact) {
-      return alert(`${this.state.name} already exists`);
-    }
+    // if (ifThereIsSuchContact) {
+    //   return alert(`${this.state.name} already exists`);
+    // }
     console.log(ifThereIsSuchContact);
 
     this.state.contacts.push(user);
@@ -51,10 +51,6 @@ class PhoneBook extends Component {
   };
 
   filterContactsByName = e => {
-    // при поиске контакта в строке поиска, при удалении напечатанного текста из инпута не восстанавливается список контактов. не могу найти ошибку и как ее исправить.
-    // после переноса ContactForm.js перестали работать инпуты. не понимаю в чем дело.
-    // и вообще, верно ли я его перенесла. у меня один инпут - это отдельный компонент. и он добавляется в ContactForm.js.
-
     const { value } = e.target;
     this.setState({
       filter: value,
@@ -91,14 +87,14 @@ class PhoneBook extends Component {
         />
         <h1>Contacts</h1>
         <p>Find contacts by name</p>
-        <Input
-          onChange={this.filterContactsByName}
+        <Filter
+          filterContactsByName={this.filterContactsByName}
           name="filter"
           value={this.state.filter}
         />
         <ContactsList
           contacts={this.state.contacts}
-          onClick={this.deleteContact}
+          deleteContact={this.deleteContact}
         />
       </div>
     );
