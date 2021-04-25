@@ -37,28 +37,27 @@ class PhoneBook extends Component {
       id: uuidv4(),
     };
 
-    // const ifThereIsSuchContact = this.state.contacts.filter(contact => {
-    //   return contact.name.toLowerCase() === this.state.name.toLowerCase();
-    // });
+    const ifThereIsSuchContact = this.state.contacts.filter(contact => {
+      return contact.name.toLowerCase() === this.state.name.toLowerCase();
+    });
 
-    // if (ifThereIsSuchContact) {
-    //   return alert('hello');
-    // }
-    // console.log(ifThereIsSuchContact);
+    if (ifThereIsSuchContact) {
+      return alert(`${this.state.name} already exists`);
+    }
+    console.log(ifThereIsSuchContact);
 
     this.state.contacts.push(user);
     this.resetInput();
   };
 
   filterContactsByName = e => {
-    // this.handleChangeInState(); спросить, почему тут не получается вызывть этот метод.
     // при поиске контакта в строке поиска, при удалении напечатанного текста из инпута не восстанавливается список контактов. не могу найти ошибку и как ее исправить.
     // после переноса ContactForm.js перестали работать инпуты. не понимаю в чем дело.
     // и вообще, верно ли я его перенесла. у меня один инпут - это отдельный компонент. и он добавляется в ContactForm.js.
 
-    const { value, name } = e.target;
+    const { value } = e.target;
     this.setState({
-      [name]: value,
+      filter: value,
     });
 
     const result = this.state.contacts.filter(contact => {
@@ -77,6 +76,12 @@ class PhoneBook extends Component {
       });
   };
 
+  deleteContact = id => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== id),
+    }));
+  };
+
   render() {
     return (
       <div>
@@ -91,7 +96,10 @@ class PhoneBook extends Component {
           name="filter"
           value={this.state.filter}
         />
-        <ContactsList contacts={this.state.contacts} />
+        <ContactsList
+          contacts={this.state.contacts}
+          onClick={this.deleteContact}
+        />
       </div>
     );
   }
