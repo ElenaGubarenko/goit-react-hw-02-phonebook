@@ -1,9 +1,10 @@
 // import { Component } = require('react');
 import { v4 as uuidv4 } from 'uuid';
 import { Component } from 'react';
-import Filter from '../Input';
+import Filter from '../Filter';
 import ContactsList from '../ContactsList';
 import ContactForm from '../ContactForm';
+import Container from '../Container';
 
 class PhoneBook extends Component {
   state = {
@@ -80,13 +81,12 @@ class PhoneBook extends Component {
 
   render() {
     return (
-      <div>
+      <Container>
         <ContactForm
           handleChangeInState={this.handleChangeInState}
           addContact={this.addContact}
         />
         <h1>Contacts</h1>
-        <p>Find contacts by name</p>
         <Filter
           filterContactsByName={this.filterContactsByName}
           name="filter"
@@ -96,7 +96,7 @@ class PhoneBook extends Component {
           contacts={this.state.contacts}
           deleteContact={this.deleteContact}
         />
-      </div>
+      </Container>
     );
   }
 }
